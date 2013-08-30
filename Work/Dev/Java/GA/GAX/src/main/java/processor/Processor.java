@@ -59,5 +59,22 @@ public class Processor {
         return bestFitness;
     }
 
+    public String resultsToString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Best Fitness : " + bestFitness + "\n");
+        sb.append("Best Code : ");
+        sb.append("{");
+        if (bestCode != null) {
+            for (int bit : bestCode) {
+                sb.append(bit);
+                sb.append(",");
+            }
+            sb.setLength(sb.length() - 1);
+        }
+        sb.append("}" + "\n");
+
+        return sb.toString();
+    }
 
 }
