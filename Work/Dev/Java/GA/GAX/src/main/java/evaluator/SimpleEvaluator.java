@@ -1,6 +1,6 @@
 package evaluator;
 
-public class SimpleEvaluator {
+public class SimpleEvaluator implements Evaluator {
 
     public int evaluateFitness(int[] code) {
         int sum = 0;

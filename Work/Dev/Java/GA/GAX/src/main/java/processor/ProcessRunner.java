@@ -1,23 +1,29 @@
 package processor;
 
 import critter.Critter;
-import evaluator.SimpleEvaluator;
+import evaluator.Evaluator;
+import log.Log;
+import world.Logger;
 import world.Population;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ProcessRunner implements Runnable {
+
+    public static final int MAX_ATTEMPTS = 90000000;
+    private static Log logger = Logger.INSTANCE.getLogger();
+
+
     private int currentIndex;
     private final int ID;
     private AtomicBoolean runFlag = new AtomicBoolean(true);
     private int numAttempts;
 
-    public static final int MAX_ATTEMPTS = 5000;
 
     Processor processor;
 
 
-    public ProcessRunner(int ID, SimpleEvaluator evaluator) {
+    public ProcessRunner(int ID, Evaluator evaluator) {
         this.ID = ID;
         currentIndex = ID;
         processor = new Processor(evaluator);
@@ -33,6 +39,8 @@ public class ProcessRunner implements Runnable {
 
     private void evaluateNextCritter() {
         Critter critter = getNextCritter();
+        logger.logDebug("***************");
+        logger.logDebug("Processor " + ID);
         processor.evaluateCritter(critter);
     }
 
@@ -66,6 +74,8 @@ public class ProcessRunner implements Runnable {
             }
 
         }
-        System.out.println(this);
+        logger.logInfo(this.toString());
+
+
     }
 }

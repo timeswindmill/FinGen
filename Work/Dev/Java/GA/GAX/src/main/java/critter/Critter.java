@@ -1,5 +1,8 @@
 package critter;
 
+import log.Log;
+import world.Logger;
+
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
@@ -12,12 +15,19 @@ public class Critter {
     public static int RANDOM_PERCENT = 5;
     public static int MAX_BIT = 99;
 
+    private Log logger = Logger.INSTANCE.getLogger();
+
+
     public Critter(int ID, int[] newCode) {
         this.ID = ID;
         //      handlerID = new AtomicInteger(0);
         code = new AtomicIntegerArray(newCode);
         codeLength = newCode.length;
 
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public int[] getCode() {
@@ -31,13 +41,14 @@ public class Critter {
     }
 
     public boolean updateCode(int[] oldCode, int[] newCode) {
+        logger.logDebug("Updating Critter " + ID);
         for (int ii = 0; ii < codeLength; ii++) {
 
             int nextBit = rand.nextBoolean() ? oldCode[ii] : newCode[ii];
             if (rand.nextInt(100) < RANDOM_PERCENT) {
                 nextBit = rand.nextInt(MAX_BIT);
             }
-            if (!code.compareAndSet(ii, oldCode[ii], newCode[ii])) {
+            if (!code.compareAndSet(ii, oldCode[ii], nextBit)) {
                 return false;
             }
         }

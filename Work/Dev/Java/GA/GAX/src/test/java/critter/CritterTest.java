@@ -18,4 +18,38 @@ public class CritterTest {
     }
 
 
+    @Test
+    public void testUpdateCritter() {
+        int[] code1 = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+        int[] code2 = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+        Critter critter = new Critter(1, code1);
+        Assert.assertNotNull(critter);
+
+        critter.updateCode(code1, code2);
+
+        boolean different = false;
+        // check not all 1
+        int[] codeCopy = critter.getCode();
+        for (int thisInt : codeCopy) {
+            if (thisInt != 1) {
+                different = true;
+                break;
+            }
+        }
+
+        Assert.assertTrue(different);
+        // now check not all 2
+        different = false;
+        for (int thisInt : codeCopy) {
+            if (thisInt != 2) {
+                different = true;
+                break;
+            }
+        }
+        Assert.assertTrue(different);
+
+
+    }
+
+
 }

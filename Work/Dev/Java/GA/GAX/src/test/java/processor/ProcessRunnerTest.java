@@ -2,14 +2,14 @@ package processor;
 
 import evaluator.SimpleEvaluator;
 import junit.framework.Assert;
-import log.FileLogger;
 import log.Log;
+import log.LogLevel;
 import org.junit.Test;
+import world.Logger;
 import world.Population;
 
 public class ProcessRunnerTest {
 
-    private Log logger = new FileLogger();
 
     @Test
     public void testCreateProcessRunner() {
@@ -22,20 +22,21 @@ public class ProcessRunnerTest {
     public void testPrintResults() {
         ProcessRunner pr = new ProcessRunner(1, new SimpleEvaluator());
         Assert.assertNotNull(pr);
-        logger.logInfo(pr.toString());
 
     }
 
 
     @Test
     public void testRunNoStop() {
-        Population testPopulation = Population.INSTANCE;
-        testPopulation.createPopulation();
-        ProcessRunner pr = new ProcessRunner(1, new SimpleEvaluator());
-        Assert.assertNotNull(pr);
-        pr.run();
-
-
+        {
+            Population testPopulation = Population.INSTANCE;
+            testPopulation.createPopulation();
+            Log logger = Logger.INSTANCE.getLogger();
+            logger.setLevel(LogLevel.ERROR);
+            ProcessRunner pr = new ProcessRunner(1, new SimpleEvaluator());
+            Assert.assertNotNull(pr);
+            pr.run();
+        }
     }
 
 }

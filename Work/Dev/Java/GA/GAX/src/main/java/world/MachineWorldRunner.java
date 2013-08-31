@@ -1,17 +1,26 @@
 package world;
 
 import evaluator.Evaluator;
-import evaluator.SimpleEvaluator;
+import evaluator.MachineEvaluator;
+import log.FileLogger;
+import log.Log;
 
-public enum SimpleWorldRunner {
+public enum MachineWorldRunner {
 
     INSTANCE;
 
-    private final Evaluator evaluator = new SimpleEvaluator();
+    private Log logger = new FileLogger();
+
+    private final Evaluator evaluator = new MachineEvaluator();
 
     public void setUpWorld() {
         Population.INSTANCE.createPopulation();
         RunnerPool.INSTANCE.setUpPool(evaluator);
+    }
+
+    public Log getLogger() {
+        return logger;
+
     }
 
 
