@@ -1,5 +1,6 @@
 package world;
 
+import control.RunConfig;
 import evaluator.Evaluator;
 import evaluator.SimpleEvaluator;
 
@@ -9,9 +10,9 @@ public enum SimpleWorldRunner {
 
     private final Evaluator evaluator = new SimpleEvaluator();
 
-    public void setUpWorld() {
+    public void setUpWorld(int maxAttempts) {
         Population.INSTANCE.createPopulation();
-        RunnerPool.INSTANCE.setUpPool(evaluator);
+        RunnerPool.INSTANCE.setUpPool(evaluator, RunConfig.INSTANCE.getNumThreads());
     }
 
 

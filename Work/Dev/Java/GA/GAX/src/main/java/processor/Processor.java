@@ -14,6 +14,7 @@ public class Processor {
 
     private final Evaluator evaluator;
     private Log logger = Logger.INSTANCE.getLogger();
+    private int itemsSinceDifference = 0;
 
 
     public Processor(Evaluator evaluator) {
@@ -22,25 +23,30 @@ public class Processor {
 
 
     public void evaluateCritter(Critter critter) {
-        logger.logDebug("Evaluating Critter " + critter.getID());
-        logger.logDebug("Best Fitness is  " + bestFitness);
+//        logger.logDebug("Evaluating Critter " + critter.getID());
+//        logger.logDebug("Best Fitness is  " + bestFitness);
 
         int[] critterCode = critter.getCode();
         if (compareCodes(critterCode) == false) {
-//            logger.logDebug("Codes are different");
             int fitness = getCritterFitness(critterCode);
-//            logger.logDebug("Critter fitness is "+ fitness);
             if (fitness < bestFitness) {
                 // try to update critter
                 critter.updateCode(critterCode, bestCode);
             } else if (fitness > bestFitness) {
-//                logger.logDebug("New best fitness");
                 bestFitness = fitness;
                 bestCode = critterCode;
             }
 
         }
-
+//        else{
+//            itemsSinceDifference++;
+//            if(itemsSinceDifference> RunConfig.INSTANCE.getPopulationSize()){
+//                int[] newCode = Critter.createRandomCode(RunConfig.INSTANCE.getDnaBaseLength());
+//                critter.updateCode(critterCode, bestCode);
+//                itemsSinceDifference=0;
+//            }
+//
+//        }
     }
 
 

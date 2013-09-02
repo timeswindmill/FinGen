@@ -1,5 +1,6 @@
 package world;
 
+import control.RunConfig;
 import evaluator.Evaluator;
 import evaluator.MachineEvaluator;
 import log.FileLogger;
@@ -15,7 +16,7 @@ public enum MachineWorldRunner {
 
     public void setUpWorld() {
         Population.INSTANCE.createPopulation();
-        RunnerPool.INSTANCE.setUpPool(evaluator);
+        RunnerPool.INSTANCE.setUpPool(evaluator, RunConfig.INSTANCE.getNumThreads());
     }
 
     public Log getLogger() {

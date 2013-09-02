@@ -1,5 +1,6 @@
 package processor;
 
+import control.RunConfig;
 import critter.Critter;
 import evaluator.Evaluator;
 import log.Log;
@@ -10,7 +11,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ProcessRunner implements Runnable {
 
-    public static final int MAX_ATTEMPTS = 90000000;
     private static Log logger = Logger.INSTANCE.getLogger();
 
 
@@ -18,6 +18,7 @@ public class ProcessRunner implements Runnable {
     private final int ID;
     private AtomicBoolean runFlag = new AtomicBoolean(true);
     private int numAttempts;
+    private final int maxAttempts;
 
 
     Processor processor;
@@ -26,6 +27,7 @@ public class ProcessRunner implements Runnable {
     public ProcessRunner(int ID, Evaluator evaluator) {
         this.ID = ID;
         currentIndex = ID;
+        this.maxAttempts = RunConfig.INSTANCE.getMaxAttempts();
         processor = new Processor(evaluator);
     }
 
@@ -69,7 +71,7 @@ public class ProcessRunner implements Runnable {
         while (runFlag.get()) {
             evaluateNextCritter();
             numAttempts++;
-            if (numAttempts > MAX_ATTEMPTS) {
+            if (numAttempts > maxAttempts) {
                 break;
             }
 

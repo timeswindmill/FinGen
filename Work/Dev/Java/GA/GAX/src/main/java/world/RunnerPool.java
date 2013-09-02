@@ -8,12 +8,11 @@ public enum RunnerPool {
 
     INSTANCE;
 
-    public static final int NUM_PROCESSORS = 4;
-    private final ProcessRunner[] runnerArray = new ProcessRunner[NUM_PROCESSORS];
+    private ProcessRunner[] runnerArray;
 
-    public void setUpPool(Evaluator evaluator) {
-
-        for (int ii = 0; ii < NUM_PROCESSORS; ii++) {
+    public void setUpPool(Evaluator evaluator, int numberThreads) {
+        runnerArray = new ProcessRunner[numberThreads];
+        for (int ii = 0; ii < numberThreads; ii++) {
             ProcessRunner procRunner = new ProcessRunner(ii * 10, evaluator);
             runnerArray[ii] = procRunner;
         }
@@ -21,7 +20,7 @@ public enum RunnerPool {
     }
 
     public int getPoolSize() {
-        return NUM_PROCESSORS;
+        return runnerArray.length;
     }
 
     public ProcessRunner getProcessRunner(int index) {

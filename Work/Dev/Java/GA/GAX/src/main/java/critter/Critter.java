@@ -41,7 +41,12 @@ public class Critter {
     }
 
     public boolean updateCode(int[] oldCode, int[] newCode) {
-        logger.logDebug("Updating Critter " + ID);
+        if ((oldCode == null) || (newCode == null)) {
+            logger.logError("New Code is " + newCode);
+            logger.logError("Old Code is " + oldCode);
+            logger.logError("Critter is " + ID);
+
+        }
         for (int ii = 0; ii < codeLength; ii++) {
 
             int nextBit = rand.nextBoolean() ? oldCode[ii] : newCode[ii];

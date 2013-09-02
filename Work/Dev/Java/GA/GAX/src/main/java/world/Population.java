@@ -7,8 +7,8 @@ public enum Population {
     INSTANCE;
 
 
-    public static final int POPULATION_SIZE = 1000;
-    public static final int DEFAULT_CODE_LENGTH = 16;
+    public static final int POPULATION_SIZE = 100000;
+    public static final int DEFAULT_CODE_LENGTH = 24;
 
     private final Critter[] critterArray = new Critter[POPULATION_SIZE];
 

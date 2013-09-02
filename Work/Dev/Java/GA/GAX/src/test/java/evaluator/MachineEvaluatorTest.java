@@ -20,17 +20,15 @@ public class MachineEvaluatorTest {
         }
 
         {// Test against Add Test Correct program
-            int[] newCodes = {OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0, OpCodes.HALT.ordinal(), 1, 2, 0};
+            int[] newCodes = {OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0, OpCodes.HALT.ordinal(), 1, 2, 0};
 
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
             int fitness = evaluator.evaluateFitness(newCodes);
-            Assert.assertEquals(MachineAddTest.NUM_TESTS, (int) fitness);
+            Assert.assertEquals(MachineAddTest.NUM_TESTS, fitness);
         }
         {// Test against Add Test  - Partial Correct program
-            int[] newCodes = {OpCodes.LOAD.ordinal(), 0, 3, 0, OpCodes.HALT.ordinal(), 0, 0, 0};
-
-
+            int[] newCodes = {OpCodes.LOAD.ordinal(), 0, 37, 0, OpCodes.HALT.ordinal(), 0, 0, 0};
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
             int fitness = evaluator.evaluateFitness(newCodes);
@@ -45,7 +43,7 @@ public class MachineEvaluatorTest {
             Assert.assertEquals(-1 * MachineAddTest.NUM_TESTS, (int) fitness);
         }
         {// Test against Another Correct program
-            int[] newCodes = {OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0, OpCodes.JMP.ordinal(), 1, 2, 7};
+            int[] newCodes = {OpCodes.ADD.ordinal(), 2, 1, 0, OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.MOV.ordinal(), 0, 2, 0, OpCodes.JMP.ordinal(), 1, 2, 7};
 
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
@@ -53,7 +51,7 @@ public class MachineEvaluatorTest {
             Assert.assertEquals(MachineAddTest.NUM_TESTS, (int) fitness);
         }
         {// Test against Another Correct program
-            int[] newCodes = {OpCodes.NOOP.ordinal(), 1, 2, 0, OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0};
+            int[] newCodes = {OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.NOOP.ordinal(), 1, 2, 0, OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0};
 
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
@@ -69,7 +67,7 @@ public class MachineEvaluatorTest {
             int[] newCodes = {
                     OpCodes.JMP.ordinal(), 1, 2, 2,
                     OpCodes.NOOP.ordinal(), 1, 2, 0,
-                    OpCodes.NOOP.ordinal(), 1, 2, 0,
+                    OpCodes.ADD.ordinal(), 2, 3, 0,
                     OpCodes.ADD.ordinal(), 1, 2, 0,
                     OpCodes.MOV.ordinal(), 0, 1, 0,
                     OpCodes.JMP.ordinal(), 1, 2, 7,
@@ -80,7 +78,7 @@ public class MachineEvaluatorTest {
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
             int fitness = evaluator.evaluateFitness(newCodes);
-            Assert.assertEquals(MachineAddTest.NUM_TESTS, (int) fitness);
+            Assert.assertEquals(MachineAddTest.NUM_TESTS, fitness);
         }
     }
 
@@ -99,7 +97,7 @@ public class MachineEvaluatorTest {
         MachineEvaluator evaluator = new MachineEvaluator();
         Assert.assertNotNull(evaluator);
         int fitness = evaluator.evaluateFitness(newCodes);
-        Assert.assertEquals(2, (int) fitness);
+        Assert.assertEquals(0, (int) fitness);
 
 
     }

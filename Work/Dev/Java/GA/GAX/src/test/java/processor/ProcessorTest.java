@@ -1,5 +1,6 @@
 package processor;
 
+import control.RunConfig;
 import critter.Critter;
 import evaluator.MachineAddTest;
 import evaluator.MachineEvaluator;
@@ -8,10 +9,27 @@ import instruction.OpCodes;
 import junit.framework.Assert;
 import log.Log;
 import log.LogLevel;
+import org.junit.Before;
 import org.junit.Test;
 import world.Logger;
 
+import java.util.Properties;
+
 public class ProcessorTest {
+    @Before
+    public void setUpProperties() {
+        Properties props = new Properties();
+        props.setProperty("POPULATION_SIZE", "1000");
+        props.setProperty("MAX_ATTEMPTS", "999");
+        props.setProperty("RESULTS_FILE", "./results.dat");
+        props.setProperty("DNA_BASE_LENGTH", "24");
+        props.setProperty("MAX_DNA_BIT", "51");
+        props.setProperty("MUTATE_PERCENT", "5");
+        props.setProperty("MACHINE_ID", "1");
+        props.setProperty("NUMBER_THREADS", "1");
+
+        RunConfig.INSTANCE.setUpProperties(props);
+    }
 
 
     @Test
@@ -74,7 +92,7 @@ public class ProcessorTest {
         }
 
         {
-            int[] newCode = {OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0, OpCodes.JMP.ordinal(), 1, 2, 7};
+            int[] newCode = {OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0};
             Processor proc = new Processor(new MachineEvaluator());
             Assert.assertNotNull(proc);
 
