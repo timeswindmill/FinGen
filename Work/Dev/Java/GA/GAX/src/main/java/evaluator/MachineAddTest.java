@@ -15,7 +15,7 @@ public class MachineAddTest {
 
             case 0:
                 newRegisters[0] = 1;
-                newRegisters[1] = 1;
+                newRegisters[1] = 2;
                 newRegisters[2] = 2;
                 newRegisters[3] = 5;
                 break;
@@ -81,7 +81,7 @@ public class MachineAddTest {
         switch (testNum) {
 
             case 0:
-                correctAnswer = 8;
+                correctAnswer = 9;
                 break;
             case 1:
                 correctAnswer = 114;

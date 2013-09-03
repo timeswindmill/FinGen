@@ -2,16 +2,12 @@ package processor;
 
 import control.RunConfig;
 import critter.Critter;
-import evaluator.MachineAddTest;
 import evaluator.MachineEvaluator;
 import evaluator.SimpleEvaluator;
 import instruction.OpCodes;
 import junit.framework.Assert;
-import log.Log;
-import log.LogLevel;
 import org.junit.Before;
 import org.junit.Test;
-import world.Logger;
 
 import java.util.Properties;
 
@@ -73,7 +69,15 @@ public class ProcessorTest {
     @Test
     public void testMachineProcessor() {
         {
-            int[] newCode = {OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.HALT.ordinal(), 0, 0, 0};
+            int[] newCode = {
+                    OpCodes.LOAD.ordinal(), 0, 70, 0,
+                    OpCodes.LOAD.ordinal(), 1, 37, 0,
+                    OpCodes.LOAD.ordinal(), 2, 75, 0,
+                    OpCodes.LOAD.ordinal(), 3, 74, 0,
+                    OpCodes.HALT.ordinal(), 0, 0, 0
+
+
+            };
             Processor proc = new Processor(new MachineEvaluator());
             Assert.assertNotNull(proc);
 
@@ -89,21 +93,27 @@ public class ProcessorTest {
             }
         }
 
-        {
-            int[] newCode = {OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0};
-            Processor proc = new Processor(new MachineEvaluator());
-            Assert.assertNotNull(proc);
-
-            Critter critter = new Critter(1, newCode);
-            Assert.assertEquals(-1, proc.getBestFitness());
-            proc.evaluateCritter(critter);
-            Assert.assertEquals(MachineAddTest.NUM_TESTS, proc.getBestFitness());
-            int[] bestCode = proc.getBestCode();
-            Assert.assertNotNull(bestCode);
-            Log logger = Logger.INSTANCE.getLogger();
-            logger.setLevel(LogLevel.INFO);
-            logger.logInfo(proc.resultsToString());
-        }
+//        {
+//            int[] newCode = {
+//                    OpCodes.LOAD.ordinal(), 0, 0, 0,
+//                    OpCodes.LOAD.ordinal(), 1, 1, 0,
+//                    OpCodes.LOAD.ordinal(), 2, 2, 0,
+//                    OpCodes.LOAD.ordinal(), 3, 3, 0,
+//                    OpCodes.HALT.ordinal(), 0, 0, 0
+//            };
+//            Processor proc = new Processor(new MachineEvaluator());
+//            Assert.assertNotNull(proc);
+//
+//            Critter critter = new Critter(1, newCode);
+//            Assert.assertEquals(-1, proc.getBestFitness());
+//            proc.evaluateCritter(critter);
+//            Assert.assertEquals(MachineSortTest.NUM_TESTS*4, proc.getBestFitness());
+//            int[] bestCode = proc.getBestCode();
+//            Assert.assertNotNull(bestCode);
+//            Log logger = Logger.INSTANCE.getLogger();
+//            logger.setLevel(LogLevel.INFO);
+//            logger.logInfo(proc.resultsToString());
+//        }
 
 
     }

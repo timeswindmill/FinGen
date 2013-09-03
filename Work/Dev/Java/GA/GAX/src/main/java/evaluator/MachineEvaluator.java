@@ -18,12 +18,12 @@ public class MachineEvaluator implements Evaluator {
     public int evaluateFitness(int[] code) {
 
         int totalFitness = 0;
-        MachineAddTest machineTest = new MachineAddTest();
+        MachineSortTest machineTest = new MachineSortTest();
         Machine machine = new Machine();
         Program thisProgram = createProgram(code);
         machine.setProgram(thisProgram);
         // initialise registers
-        for (int ii = 0; ii < MachineAddTest.NUM_TESTS; ii++) {
+        for (int ii = 0; ii < MachineSortTest.NUM_TESTS; ii++) {
             long[] registers = machineTest.getRegisters(ii);
             machine.loadRegisters(registers);
             machine.runProgram();

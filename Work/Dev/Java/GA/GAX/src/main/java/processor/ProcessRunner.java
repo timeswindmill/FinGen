@@ -75,7 +75,12 @@ public class ProcessRunner implements Runnable {
     public void run() {
         logger.logInfo("Starting Runner " + ID);
         while (runFlag.get()) {
-            evaluateNextCritter();
+            try {
+                evaluateNextCritter();
+            } catch (Exception e) {
+                logger.logError("Error during evaluateNextCritter " + e);
+                e.printStackTrace();
+            }
             numAttempts++;
             if (numAttempts > maxAttempts) {
                 break;
