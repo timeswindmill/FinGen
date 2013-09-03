@@ -54,6 +54,7 @@ public class ProcessRunner implements Runnable {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("############\n");
         sb.append("Runner  : " + ID + "\n");
         sb.append("Processor Results" + "\n");
         sb.append(processor.resultsToString());
@@ -72,7 +73,7 @@ public class ProcessRunner implements Runnable {
 
     @Override
     public void run() {
-
+        logger.logInfo("Starting Runner " + ID);
         while (runFlag.get()) {
             evaluateNextCritter();
             numAttempts++;

@@ -2,12 +2,13 @@ package world;
 
 import control.RunConfig;
 import control.results.ResultsFile;
+import control.results.ResultsLine;
 import evaluator.Evaluator;
 import evaluator.MachineEvaluator;
-import log.FileLogger;
 import log.Log;
 import processor.Processor;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,7 @@ public enum MachineWorldRunner {
 
     INSTANCE;
 
-    private final Log logger = new FileLogger();
+    private final Log logger = Logger.INSTANCE.getLogger();
 
     private final Evaluator evaluator = new MachineEvaluator();
 
@@ -26,25 +27,24 @@ public enum MachineWorldRunner {
         // try to set up from results file
         // read results file
         String fileName = RunConfig.INSTANCE.getResultsFileName();
-        ResultsFile resultsFile = null;
+        List<ResultsLine> resultsLines = null;
         if (fileName != null) {
-            resultsFile = ResultsFile.readResults(fileName);
+            resultsLines = ResultsFile.readResults(fileName);
         }
-        if (resultsFile != null) {
-            population.createPopulation(resultsFile);
+        if (resultsLines.size() > 0) {
+            population.createPopulation(resultsLines);
             logger.logInfo("Loaded Population from results file");
-        }
-        if (population.getPopulationSize() > 0) {
-            logger.logInfo("Population size : " + population.getPopulationSize());
         } else {
-            logger.logError("Unable to load population from results file, creating instead");
             population.createPopulation();
+            logger.logInfo("Created Random Population");
         }
+        logger.logInfo("Population size : " + population.getPopulationSize());
         RunnerPool.INSTANCE.setUpPool(evaluator, RunConfig.INSTANCE.getNumThreads(), population);
     }
 
 
     public void runWorld() {
+        logger.logInfo("Running World");
         int numberProcessors = RunConfig.INSTANCE.getNumThreads();
         ExecutorService taskExecutor = Executors.newFixedThreadPool(numberProcessors);
         for (int ii = 0; ii < numberProcessors; ii++) {

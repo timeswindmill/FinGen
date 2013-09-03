@@ -1,11 +1,9 @@
 package world;
 
 import control.RunConfig;
-import control.results.ResultsFile;
 import control.results.ResultsLine;
 import critter.Critter;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,11 +45,9 @@ public class Population {
 //
 //    }
 
-    public void createPopulation(ResultsFile resultsFile) {
+    public void createPopulation(List<ResultsLine> resultsList) {
 
-        ResultsLine[] lines = resultsFile.getResultsLines();
 
-        List<ResultsLine> resultsList = Arrays.asList(lines);
         Collections.sort(resultsList);
 
         int resultsListSize = resultsList.size();

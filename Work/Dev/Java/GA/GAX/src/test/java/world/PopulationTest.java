@@ -1,14 +1,15 @@
 package world;
 
 import control.RunConfig;
-import control.results.ResultsFile;
 import control.results.ResultsLine;
 import critter.Critter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 public class PopulationTest {
@@ -45,21 +46,22 @@ public class PopulationTest {
         ResultsLine rl2 = ResultsLine.createLine(2, new Date().getTime(), 2, new int[]{2, 2, 2, 2});
         ResultsLine rl3 = ResultsLine.createLine(3, new Date().getTime(), 3, new int[]{3, 3, 3, 3});
 
-        ResultsFile rf = new ResultsFile();
-        rf.addResultsLine(rl1);
-        rf.addResultsLine(rl2);
-        rf.addResultsLine(rl3);
+        List<ResultsLine> allResults = new ArrayList<>(3);
+
+        allResults.add(rl1);
+        allResults.add(rl2);
+        allResults.add(rl3);
 
         {
             Population pop = new Population(2);
-            pop.createPopulation(rf);
+            pop.createPopulation(allResults);
 
             Assert.assertNotNull(pop);
             Assert.assertEquals(2, pop.getPopulationSize());
         }
         {
             Population pop = new Population(5);
-            pop.createPopulation(rf);
+            pop.createPopulation(allResults);
 
             Assert.assertNotNull(pop);
             Assert.assertEquals(5, pop.getPopulationSize());

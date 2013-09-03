@@ -1,28 +1,33 @@
 package control;
 
+import log.Log;
+import log.LogLevel;
+import world.Logger;
 import world.MachineWorldRunner;
 
 import java.io.IOException;
 
 public class Control {
 
+    private static Log logger = Logger.INSTANCE.getLogger();
 
     public static void main(String[] args) {
 
+        logger.setLevel(LogLevel.INFO);
         Control control = new Control();
 
         if (args.length > 0) {
 
             try {
                 RunConfig.INSTANCE.setUpProperties(args[0]);
-                System.out.println(RunConfig.INSTANCE);
+                logger.logInfo(RunConfig.INSTANCE.toString());
             } catch (IOException e) {
-                System.out.println("Error reading properties file " + e);
+                logger.logError("Error reading properties file " + e);
             }
             control.start();
 
         } else {
-            System.out.println("No properties file specified ");
+            logger.logError("No properties file specified ");
         }
 
     }

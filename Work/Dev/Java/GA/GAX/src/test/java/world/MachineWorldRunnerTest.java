@@ -18,7 +18,7 @@ public class MachineWorldRunnerTest {
         Properties props = new Properties();
         props.setProperty("POPULATION_SIZE", "10");
         props.setProperty("MAX_ATTEMPTS", "99");
-        props.setProperty("RESULTS_FILE", "./results.dat");
+        props.setProperty("RESULTS_FILE", "./testResults.dat");
         props.setProperty("DNA_BASE_LENGTH", "24");
         props.setProperty("MAX_DNA_BIT", "51");
         props.setProperty("MUTATE_PERCENT", "5");

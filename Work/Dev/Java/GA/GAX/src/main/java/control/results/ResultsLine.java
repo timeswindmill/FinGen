@@ -1,11 +1,13 @@
 package control.results;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ResultsLine implements Comparable<ResultsLine>, Serializable {
 
-
+    private static final String DELIMITER = "|";
     private final int machineID;
     private final long date;
     private final double fitness;
@@ -26,6 +28,37 @@ public class ResultsLine implements Comparable<ResultsLine>, Serializable {
         return new ResultsLine(machine, longDate, fitness, bits);
 
     }
+
+    public static List<ResultsLine> createLines(List<String> lines) {
+        int numLines = lines.size();
+        List<ResultsLine> resultsLines = new ArrayList<>(numLines);
+        for (int ii = 0; ii < numLines; ii++) {
+            ResultsLine line = createLine(lines.get(ii));
+            resultsLines.add(line);
+        }
+        return resultsLines;
+    }
+
+    public static ResultsLine createLine(String line) {
+
+        ResultsLine newLine = null;
+        String regex = "\\" + DELIMITER;
+        String[] fields = line.split(regex);
+        if (fields.length > 0) {
+            int machineID = Integer.parseInt(fields[0]);
+            long date = Long.parseLong(fields[1]);
+            double fitness = Double.parseDouble(fields[2]);
+            int numIntegers = fields.length > 3 ? fields.length - 3 : 0;
+            int[] bits = new int[numIntegers];
+            for (int ii = 0; ii < numIntegers; ii++) {
+                bits[ii] = Integer.parseInt(fields[ii + 3]);
+
+            }
+            newLine = new ResultsLine(machineID, date, fitness, bits);
+        }
+        return newLine;
+    }
+
 
     public int[] getBits() {
         return bits;
@@ -70,5 +103,27 @@ public class ResultsLine implements Comparable<ResultsLine>, Serializable {
         result = 31 * result + Arrays.hashCode(bits);
         return result;
     }
+
+    public String toString() {
+
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(machineID);
+        sb.append(DELIMITER);
+
+        sb.append(date);
+        sb.append(DELIMITER);
+
+        sb.append(fitness);
+
+        for (int bit : bits) {
+            sb.append(DELIMITER);
+            sb.append(bit);
+        }
+
+        return sb.toString();
+
+    }
+
 
 }
