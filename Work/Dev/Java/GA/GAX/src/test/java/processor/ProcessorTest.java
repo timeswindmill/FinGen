@@ -47,7 +47,6 @@ public class ProcessorTest {
             Processor proc = new Processor(new SimpleEvaluator());
             Assert.assertNotNull(proc);
             Assert.assertEquals(-1, proc.getBestFitness());
-            Assert.assertEquals(null, proc.getBestCode());
             proc.evaluateCritter(critter);
             Assert.assertEquals(15, proc.getBestFitness());
             int[] bestCode = proc.getBestCode();
@@ -80,7 +79,6 @@ public class ProcessorTest {
 
             Critter critter = new Critter(1, newCode);
             Assert.assertEquals(-1, proc.getBestFitness());
-            Assert.assertEquals(null, proc.getBestCode());
             proc.evaluateCritter(critter);
             Assert.assertEquals(0, proc.getBestFitness());
             int[] bestCode = proc.getBestCode();
@@ -98,7 +96,6 @@ public class ProcessorTest {
 
             Critter critter = new Critter(1, newCode);
             Assert.assertEquals(-1, proc.getBestFitness());
-            Assert.assertEquals(null, proc.getBestCode());
             proc.evaluateCritter(critter);
             Assert.assertEquals(MachineAddTest.NUM_TESTS, proc.getBestFitness());
             int[] bestCode = proc.getBestCode();

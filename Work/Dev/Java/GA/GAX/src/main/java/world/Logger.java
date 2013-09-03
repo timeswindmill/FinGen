@@ -7,7 +7,7 @@ public enum Logger {
 
     INSTANCE;
 
-    private Log logger = new FileLogger();
+    private final Log logger = new FileLogger();
 
     public Log getLogger() {
         return logger;

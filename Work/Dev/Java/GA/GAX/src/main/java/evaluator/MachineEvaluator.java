@@ -8,8 +8,8 @@ public class MachineEvaluator implements Evaluator {
 
     private Program createProgram(int[] bits) {
 
-        Program newProg = Program.createProgram(bits);
-        return newProg;
+        return Program.createProgram(bits);
+
 
     }
 
@@ -23,7 +23,7 @@ public class MachineEvaluator implements Evaluator {
         Program thisProgram = createProgram(code);
         machine.setProgram(thisProgram);
         // initialise registers
-        for (int ii = 0; ii < machineTest.NUM_TESTS; ii++) {
+        for (int ii = 0; ii < MachineAddTest.NUM_TESTS; ii++) {
             long[] registers = machineTest.getRegisters(ii);
             machine.loadRegisters(registers);
             machine.runProgram();

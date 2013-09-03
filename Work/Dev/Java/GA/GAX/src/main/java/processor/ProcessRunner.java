@@ -11,30 +11,31 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ProcessRunner implements Runnable {
 
-    private static Log logger = Logger.INSTANCE.getLogger();
+    private static final Log logger = Logger.INSTANCE.getLogger();
 
 
     private int currentIndex;
     private final int ID;
-    private AtomicBoolean runFlag = new AtomicBoolean(true);
+    private final AtomicBoolean runFlag = new AtomicBoolean(true);
     private int numAttempts;
     private final int maxAttempts;
 
 
-    Processor processor;
+    private final Processor processor;
+    private final Population population;
 
-
-    public ProcessRunner(int ID, Evaluator evaluator) {
+    public ProcessRunner(int ID, Evaluator evaluator, Population population) {
         this.ID = ID;
         currentIndex = ID;
         this.maxAttempts = RunConfig.INSTANCE.getMaxAttempts();
         processor = new Processor(evaluator);
+        this.population = population;
     }
 
 
     private Critter getNextCritter() {
         currentIndex++;
-        Critter newCritter = Population.INSTANCE.getNextCritter(currentIndex);
+        Critter newCritter = population.getNextCritter(currentIndex);
         return newCritter;
 
     }
@@ -46,9 +47,9 @@ public class ProcessRunner implements Runnable {
         processor.evaluateCritter(critter);
     }
 
-    public void stopRunner() {
-        runFlag.set(false);
-    }
+//    public void stopRunner() {
+//        runFlag.set(false);
+//    }
 
 
     public String toString() {
@@ -65,6 +66,10 @@ public class ProcessRunner implements Runnable {
 
     }
 
+    public Processor getProcessor() {
+        return processor;
+    }
+
     @Override
     public void run() {
 
@@ -77,7 +82,6 @@ public class ProcessRunner implements Runnable {
 
         }
         logger.logInfo(this.toString());
-
 
     }
 }

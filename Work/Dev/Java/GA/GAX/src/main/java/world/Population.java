@@ -1,24 +1,29 @@
 package world;
 
+import control.RunConfig;
+import control.results.ResultsFile;
+import control.results.ResultsLine;
 import critter.Critter;
 
-public enum Population {
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-    INSTANCE;
+public class Population {
 
 
-    public static final int POPULATION_SIZE = 100000;
-    public static final int DEFAULT_CODE_LENGTH = 24;
+    private final Critter[] critterArray;
+    private final int codeLength;
 
-    private final Critter[] critterArray = new Critter[POPULATION_SIZE];
+    public Population(int populationSize) {
+        critterArray = new Critter[populationSize];
+        codeLength = RunConfig.INSTANCE.getDnaBaseLength();
+    }
 
-//    public Critter getCritter(int index) {
-//        return critterArray[index];
-//    }
 
     public void createPopulation() {
         for (int ii = 0; ii < critterArray.length; ii++) {
-            int[] newCode = Critter.createRandomCode(DEFAULT_CODE_LENGTH);
+            int[] newCode = Critter.createRandomCode(codeLength);
             critterArray[ii] = new Critter(ii, newCode);
         }
 
@@ -26,8 +31,57 @@ public enum Population {
 
     public Critter getNextCritter(int critterIndex) {
 
-        return critterArray[critterIndex % POPULATION_SIZE];
+        return critterArray[critterIndex % critterArray.length];
     }
 
+    public int getPopulationSize() {
+        return critterArray.length;
+    }
+
+//    public void addCritter(Critter newCritter){
+//        int oldSize = critterArray.length;
+//        Critter[] newArray = new Critter[oldSize+1];
+//        System.arraycopy(critterArray,0,newArray,0,oldSize);
+//        newArray[oldSize]= newCritter;
+//        critterArray= newArray;
+//
+//    }
+
+    public void createPopulation(ResultsFile resultsFile) {
+
+        ResultsLine[] lines = resultsFile.getResultsLines();
+
+        List<ResultsLine> resultsList = Arrays.asList(lines);
+        Collections.sort(resultsList);
+
+        int resultsListSize = resultsList.size();
+        for (int ii = 0; ii < critterArray.length; ii++) {
+            Critter newCritter;
+            if (ii < resultsListSize) {
+                newCritter = new Critter(ii, resultsList.get(ii));
+            } else {
+                int[] randomCode = Critter.createRandomCode(codeLength);
+                newCritter = new Critter(ii, randomCode);
+            }
+
+            critterArray[ii] = newCritter;
+
+        }
+    }
+
+//    public ResultsLine[] getResultsLines(){
+//
+//        int machineID = RunConfig.INSTANCE.getMachineID();
+//        ResultsLine[] resultsLines = new ResultsLine[critterArray.length];
+//
+//         for(int ii=0;ii<critterArray.length;ii++){
+//             ResultsLine line = new ResultsLine(machineID,new Date().getTime(),critterArray[ii].)
+//
+//
+//         }
+//
+//        return resultsLines;
+//
+//    }
 
 }

@@ -15,6 +15,7 @@ public class Control {
 
             try {
                 RunConfig.INSTANCE.setUpProperties(args[0]);
+                System.out.println(RunConfig.INSTANCE);
             } catch (IOException e) {
                 System.out.println("Error reading properties file " + e);
             }

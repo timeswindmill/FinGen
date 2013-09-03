@@ -40,7 +40,7 @@ public class MachineEvaluatorTest {
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
             int fitness = evaluator.evaluateFitness(newCodes);
-            Assert.assertEquals(-1 * MachineAddTest.NUM_TESTS, (int) fitness);
+            Assert.assertEquals(-1 * MachineAddTest.NUM_TESTS, fitness);
         }
         {// Test against Another Correct program
             int[] newCodes = {OpCodes.ADD.ordinal(), 2, 1, 0, OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.MOV.ordinal(), 0, 2, 0, OpCodes.JMP.ordinal(), 1, 2, 7};
@@ -48,7 +48,7 @@ public class MachineEvaluatorTest {
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
             int fitness = evaluator.evaluateFitness(newCodes);
-            Assert.assertEquals(MachineAddTest.NUM_TESTS, (int) fitness);
+            Assert.assertEquals(MachineAddTest.NUM_TESTS, fitness);
         }
         {// Test against Another Correct program
             int[] newCodes = {OpCodes.ADD.ordinal(), 2, 3, 0, OpCodes.NOOP.ordinal(), 1, 2, 0, OpCodes.ADD.ordinal(), 1, 2, 0, OpCodes.MOV.ordinal(), 0, 1, 0};
@@ -56,7 +56,7 @@ public class MachineEvaluatorTest {
             MachineEvaluator evaluator = new MachineEvaluator();
             Assert.assertNotNull(evaluator);
             int fitness = evaluator.evaluateFitness(newCodes);
-            Assert.assertEquals(MachineAddTest.NUM_TESTS, (int) fitness);
+            Assert.assertEquals(MachineAddTest.NUM_TESTS, fitness);
         }
 
     }

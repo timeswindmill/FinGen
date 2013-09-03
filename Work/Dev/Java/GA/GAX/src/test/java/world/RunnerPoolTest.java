@@ -9,6 +9,9 @@ import org.junit.Test;
 import java.util.Properties;
 
 public class RunnerPoolTest {
+
+    private Population population;
+
     @Before
     public void setUpProperties() {
         Properties props = new Properties();
@@ -22,25 +25,24 @@ public class RunnerPoolTest {
         props.setProperty("NUMBER_THREADS", "1");
 
         RunConfig.INSTANCE.setUpProperties(props);
+        population = new Population(RunConfig.INSTANCE.getPopulationSize());
+        population.createPopulation();
+
     }
 
     @Test
     public void testSetUpPool() throws Exception {
-        RunnerPool.INSTANCE.setUpPool(new SimpleEvaluator(), RunConfig.INSTANCE.getNumThreads());
+        RunnerPool.INSTANCE.setUpPool(new SimpleEvaluator(), RunConfig.INSTANCE.getNumThreads(), population);
         for (int ii = 0; ii < RunnerPool.INSTANCE.getPoolSize(); ii++) {
             Assert.assertNotNull(RunnerPool.INSTANCE.getProcessRunner(ii));
         }
     }
 
-    @Test
-    public void testGetPoolSize() throws Exception {
-
-    }
 
     @Test
     public void testGetProcessRunner() throws Exception {
 
-        RunnerPool.INSTANCE.setUpPool(new SimpleEvaluator(), RunConfig.INSTANCE.getNumThreads());
+        RunnerPool.INSTANCE.setUpPool(new SimpleEvaluator(), RunConfig.INSTANCE.getNumThreads(), population);
         System.out.println(RunConfig.INSTANCE.getNumThreads());
         Assert.assertEquals(RunnerPool.INSTANCE.getPoolSize(), RunConfig.INSTANCE.getNumThreads());
         Assert.assertNotNull(RunnerPool.INSTANCE.getProcessRunner(0));

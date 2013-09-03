@@ -1,20 +1,22 @@
 package processor;
 
+import control.RunConfig;
+import control.results.ResultsLine;
 import critter.Critter;
 import evaluator.Evaluator;
 import evaluator.MachineEvaluator;
 import instruction.Program;
-import log.Log;
-import world.Logger;
+
+import java.util.Date;
 
 public class Processor {
 
-    private int[] bestCode;
+    private int[] bestCode = {0, 0, 0, 0};
     private int bestFitness = -1;
 
     private final Evaluator evaluator;
-    private Log logger = Logger.INSTANCE.getLogger();
-    private int itemsSinceDifference = 0;
+//    private Log logger = Logger.INSTANCE.getLogger();
+//    private int itemsSinceDifference = 0;
 
 
     public Processor(Evaluator evaluator) {
@@ -51,8 +53,8 @@ public class Processor {
 
 
     private int getCritterFitness(int[] code) {
-        int fitness = evaluator.evaluateFitness(code);
-        return fitness;
+        return evaluator.evaluateFitness(code);
+
     }
 
 
@@ -101,5 +103,15 @@ public class Processor {
 
         return sb.toString();
     }
+
+    public ResultsLine createResults() {
+        int machineID = RunConfig.INSTANCE.getMachineID();
+        ResultsLine resultsLine = ResultsLine.createLine(machineID, new Date().getTime(), bestFitness, bestCode);
+
+
+        return resultsLine;
+
+    }
+
 
 }
